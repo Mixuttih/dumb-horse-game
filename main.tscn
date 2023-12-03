@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://xdwhfq5y2n8g"]
+
+[ext_resource type="PackedScene" uid="uid://dey1ic1w02olt" path="res://player_1.tscn" id="1_v68n3"]
+[ext_resource type="PackedScene" uid="uid://h28dv04eexva" path="res://environment.tscn" id="2_1cg03"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_ca32w"]
+[ext_resource type="PackedScene" uid="uid://b6h585c6ocpbj" path="res://player_2.tscn" id="3_f5onw"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="4_ylrc6"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3D_resource.gd" id="5_m3kef"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yj3uf"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1eyye"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="Resource" id="Resource_dlphn"]
+script = ExtResource("5_m3kef")
+cull_mask = 1048575
+h_offset = 0.0
+v_offset = 0.0
+fov = 75.0
+
+[node name="world" type="Node3D"]
+
+[node name="environment" parent="." instance=ExtResource("2_1cg03")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
+
+[node name="player1" parent="." instance=ExtResource("1_v68n3")]
+
+[node name="player2" parent="." instance=ExtResource("3_f5onw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+
+[node name="floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("BoxShape3D_yj3uf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_1eyye")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0, 0.884948, 0.46569, 0.00445269, -0.465686, 0.884939, 1.47439, 3.02699, 5.2521)
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+script = ExtResource("2_ca32w")
+
+[node name="PhantomCamera3D" type="Node3D" parent="."]
+transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0, 0.884948, 0.46569, 0.00445269, -0.465686, 0.884939, 1.47439, 3.02699, 5.2521)
+script = ExtResource("4_ylrc6")
+priority_override = false
+priority = 0
+follow_mode = 3
+follow_group = Array[NodePath]([NodePath("../player1"), NodePath("../player2")])
+follow_parameters/auto_distance = true
+follow_parameters/min_distance = 5.0
+follow_parameters/max_distance = 10.0
+follow_parameters/auto_distance_divisor = 10.0
+follow_parameters/target_offset = Vector3(0, 0, 0)
+follow_parameters/damping = false
+look_at_mode = 0
+tween_parameters = null
+tween_on_load = false
+inactive_update_mode = 0
+camera_3D_resource = SubResource("Resource_dlphn")
