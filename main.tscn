@@ -24,7 +24,8 @@ fov = 75.0
 [sub_resource type="CylinderMesh" id="CylinderMesh_asey1"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_epmja"]
-radius = 2.5
+height = 4.0
+radius = 2.0
 
 [node name="world" type="Node3D"]
 script = ExtResource("1_cjg7d")
@@ -81,5 +82,16 @@ mesh = SubResource("CylinderMesh_asey1")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="middle_mesh/Area3D"]
 shape = SubResource("CylinderShape3D_epmja")
 
+[node name="BreakTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="BreakLabel" type="Label" parent="."]
+visible = false
+offset_left = 550.0
+offset_top = 70.0
+offset_right = 630.0
+offset_bottom = 125.0
+theme_override_font_sizes/font_size = 40
+
 [connection signal="body_entered" from="middle_mesh/Area3D" to="." method="_on_area_3d_body_entered"]
-[connection signal="body_exited" from="middle_mesh/Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="timeout" from="BreakTimer" to="." method="_on_break_timer_timeout"]

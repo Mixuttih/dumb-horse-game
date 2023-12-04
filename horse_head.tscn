@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcqf3m2uifx8o"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6u8dn"]
+height = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yqufu"]
+height = 0.2
+
+[node name="horse_head" type="Node3D"]
+
+[node name="Skeleton3D" type="Skeleton3D" parent="."]
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Skeleton3D"]
+
+[node name="neck1" type="PhysicalBone3D" parent="Skeleton3D/BoneAttachment3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Skeleton3D/BoneAttachment3D/neck1"]
+shape = SubResource("CylinderShape3D_6u8dn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Skeleton3D/BoneAttachment3D/neck1"]
+mesh = SubResource("CylinderMesh_yqufu")
+
+[node name="neck2" type="PhysicalBone3D" parent="Skeleton3D/BoneAttachment3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.202021, 0)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.202021, 0)
+body_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.202021, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Skeleton3D/BoneAttachment3D/neck2"]
+shape = SubResource("CylinderShape3D_6u8dn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Skeleton3D/BoneAttachment3D/neck2"]
+mesh = SubResource("CylinderMesh_yqufu")
+
+[node name="neck3" type="PhysicalBone3D" parent="Skeleton3D/BoneAttachment3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.419995, 0)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.419995, 0)
+body_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.419995, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Skeleton3D/BoneAttachment3D/neck3"]
+shape = SubResource("CylinderShape3D_6u8dn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Skeleton3D/BoneAttachment3D/neck3"]
+mesh = SubResource("CylinderMesh_yqufu")
