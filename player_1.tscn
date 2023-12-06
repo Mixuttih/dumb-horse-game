@@ -11,6 +11,7 @@ albedo_color = Color(0, 0.694118, 1, 1)
 material = SubResource("StandardMaterial3D_ie7d8")
 
 [node name="player1" type="CharacterBody3D"]
+disable_mode = 1
 script = ExtResource("1_6wr17")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

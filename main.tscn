@@ -9,10 +9,10 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3D_resource.gd" id="5_m3kef"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yj3uf"]
-size = Vector3(10, 1, 10)
+size = Vector3(50, 1, 50)
 
 [sub_resource type="BoxMesh" id="BoxMesh_1eyye"]
-size = Vector3(10, 1, 10)
+size = Vector3(50, 1, 50)
 
 [sub_resource type="Resource" id="Resource_dlphn"]
 script = ExtResource("5_m3kef")
@@ -84,6 +84,22 @@ shape = SubResource("CylinderShape3D_epmja")
 
 [node name="BreakTimer" type="Timer" parent="."]
 wait_time = 3.0
+
+[node name="GameOver" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -321.0
+offset_top = -41.5
+offset_right = 321.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 60
+text = "YOUR HORSE BROKE :("
 
 [node name="BreakLabel" type="Label" parent="."]
 visible = false

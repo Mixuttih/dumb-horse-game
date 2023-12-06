@@ -7,6 +7,7 @@ extends Node3D
 @onready var player_2 = $player2
 @onready var break_timer = $BreakTimer
 @onready var break_label = $BreakLabel
+@onready var game_over_label = $GameOver
 
 var mid_point_x
 var mid_point_y
@@ -14,6 +15,7 @@ var mid_point_z
 var mid_point_calc
 
 var distance
+var player_distance
 var timer_running = false
 
 # Called when the node enters the scene tree for the first time.
@@ -23,38 +25,50 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if middle_mesh.visible == false:
+		game_over()
+	
+	#Update the timer display every frame
+	break_label.set_text(str(break_timer.get_time_left()).pad_decimals(1))
+	
+	#Calculate the mid-point of two players
 	mid_point_x = (player_1.global_position.x + player_2.global_position.x) / 2
 	mid_point_y = ((player_1.global_position.y + player_2.global_position.y) / 2) + 1
 	mid_point_z = (player_1.global_position.z + player_2.global_position.z) / 2
 	mid_point_calc = Vector3(mid_point_x, mid_point_y, mid_point_z)
-	
+	#Move the middle mesh in between
 	middle_mesh.global_position = mid_point_calc
 	
+	#Bind the area node to middle mesh
 	area_3d.position = middle_mesh.global_position
+	#Rotate the middle mesh to player 1
 	middle_mesh.look_at(player_1.position)
+	#Rotate the middle mesh to form a body
 	middle_mesh.rotation_degrees.x = 90
 	
+	#Calculate the distance of middle mesh and player 1
 	distance = abs(player_1.global_position - middle_mesh.global_position)
-	print(distance)
 	
-	break_label.set_text(str(break_timer.get_time_left()).pad_decimals(1))
+	#Stretch the middle mesh based on distance
+	middle_mesh.mesh.height = (distance.x + distance.z) * 1.5
 	
-	if distance.x < 1:
+	#Calculate the distance of player 1 and player 2
+	player_distance = abs(player_1.global_position - player_2.global_position)
+	
+	#Check player distance from each other
+	#Adjust player speed
+	#Start and show timer if players far enough
+	if player_distance.x < 3 and player_distance.z < 3:
 		Globals.speed_player_1 = 5.0
 		Globals.speed_player_2 = 5.0
-	elif distance.z < 0.2:
-		Globals.speed_player_1 = 5.0
-		Globals.speed_player_2 = 5.0
-	elif distance.x > 1 and distance.x < 1.5 or distance.z > 0.2 and distance.z < 1:
-		Globals.speed_player_1 = 2.5
-		Globals.speed_player_2 = 2.5
 		if timer_running == true:
 			timer_stop()
-	elif distance.x > 1.5 or distance.z > 1.5:
-		Globals.speed_player_1 = 0.5
-		Globals.speed_player_2 = 0.5
+	elif player_distance.x > 3 or player_distance.z > 3:
+		Globals.speed_player_1 = 2.5
+		Globals.speed_player_2 = 2.5
 		if timer_running == false:
 			timer_start()
+
 
 
 func timer_start():
@@ -80,3 +94,9 @@ func _on_area_3d_body_entered(body):
 
 func _on_break_timer_timeout():
 	middle_mesh.visible = false
+
+func game_over():
+	break_timer.stop()
+	player_1.process_mode = Node.PROCESS_MODE_DISABLED
+	player_2.process_mode = Node.PROCESS_MODE_DISABLED
+	game_over_label.visible = true
