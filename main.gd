@@ -25,6 +25,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	
 	if middle_mesh.visible == false:
 		game_over()
 	
@@ -33,7 +35,7 @@ func _process(delta):
 	
 	#Calculate the mid-point of two players
 	mid_point_x = (player_1.global_position.x + player_2.global_position.x) / 2
-	mid_point_y = ((player_1.global_position.y + player_2.global_position.y) / 2) + 1
+	mid_point_y = ((player_1.global_position.y + player_2.global_position.y) / 2) + 1.4
 	mid_point_z = (player_1.global_position.z + player_2.global_position.z) / 2
 	mid_point_calc = Vector3(mid_point_x, mid_point_y, mid_point_z)
 	#Move the middle mesh in between
@@ -46,11 +48,25 @@ func _process(delta):
 	#Rotate the middle mesh to form a body
 	middle_mesh.rotation_degrees.x = 90
 	
+	if player_1.position.y - player_2.position.y > 0.1:
+		middle_mesh.rotation_degrees.x = 90 + (player_1.position.y * 10)
+	if player_2.position.y - player_1.position.y > 0.1:
+		middle_mesh.rotation_degrees.x = 90 - (player_2.position.y * 20)
+	
+	
+	
 	#Calculate the distance of middle mesh and player 1
 	distance = abs(player_1.global_position - middle_mesh.global_position)
-	
+	print(distance)
 	#Stretch the middle mesh based on distance
-	middle_mesh.mesh.height = (distance.x + distance.z) * 1.5
+	middle_mesh.mesh.height = (distance.x + distance.z) * 1.7
+	
+	#Pull player 1 towards middle mesh
+	player_1.velocity.x = -(player_1.global_position.x - middle_mesh.global_position.x)
+	player_1.velocity.z = -(player_1.global_position.z - middle_mesh.global_position.z)
+	#Pull player 2 towards middle mesh
+	player_2.velocity.x = -(player_2.global_position.x - middle_mesh.global_position.x)
+	player_2.velocity.z = -(player_2.global_position.z - middle_mesh.global_position.z)
 	
 	#Calculate the distance of player 1 and player 2
 	player_distance = abs(player_1.global_position - player_2.global_position)
@@ -58,12 +74,12 @@ func _process(delta):
 	#Check player distance from each other
 	#Adjust player speed
 	#Start and show timer if players far enough
-	if player_distance.x < 3 and player_distance.z < 3:
+	if player_distance.x + player_distance.z < 4:
 		Globals.speed_player_1 = 5.0
 		Globals.speed_player_2 = 5.0
 		if timer_running == true:
 			timer_stop()
-	elif player_distance.x > 3 or player_distance.z > 3:
+	elif player_distance.x + player_distance.z > 4:
 		Globals.speed_player_1 = 2.5
 		Globals.speed_player_2 = 2.5
 		if timer_running == false:
