@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dey1ic1w02olt"]
+[gd_scene load_steps=8 format=3 uid="uid://dey1ic1w02olt"]
 
 [ext_resource type="Script" path="res://player_1.gd" id="1_6wr17"]
 [ext_resource type="Texture2D" uid="uid://8xbwa5hc1lwf" path="res://horsetexture.png" id="2_e73yx"]
@@ -100,6 +100,9 @@ bind/20/name = &"Bone.17"
 bind/20/bone = -1
 bind/20/pose = Transform3D(-1, -1.26485e-07, -3.76956e-15, -2.79397e-08, 2.01166e-07, 1, -1.4453e-07, 1, 2.98023e-08, -0.714811, -0.253456, 3.17855)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jg7e1"]
+albedo_texture = ExtResource("2_e73yx")
+
 [node name="player1" type="CharacterBody3D"]
 disable_mode = 1
 script = ExtResource("1_6wr17")
@@ -109,7 +112,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_6twik")
 
 [node name="horseface2" type="Node3D" parent="."]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.043803, 1.00917, -0.112856)
+transform = Transform3D(0.4, 0, 0, 0, 0.3, 0, 0, 0, 0.4, -0.043803, 1.00917, -0.112856)
 
 [node name="Empty" type="Node3D" parent="horseface2"]
 transform = Transform3D(0, 1, 0, 0, 0, -1, -1, 0, 0, 0, 0.695676, -1.03695)
@@ -117,7 +120,6 @@ transform = Transform3D(0, 1, 0, 0, 0, -1, -1, 0, 0, 0, 0.695676, -1.03695)
 [node name="Armature" type="Node3D" parent="horseface2"]
 
 [node name="Skeleton3D" type="Skeleton3D" parent="horseface2/Armature"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 bones/0/name = "Bone"
 bones/0/parent = -1
 bones/0/rest = Transform3D(-1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0.0573065, -2)
@@ -269,3 +271,4 @@ bones/20/scale = Vector3(1, 1, 1)
 [node name="horseface" type="MeshInstance3D" parent="horseface2/Armature/Skeleton3D"]
 mesh = SubResource("ArrayMesh_3guvm")
 skin = SubResource("Skin_iwru2")
+surface_material_override/0 = SubResource("StandardMaterial3D_jg7e1")

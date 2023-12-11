@@ -13,6 +13,8 @@ extends Node3D
 @onready var break_label = $BreakLabel
 @onready var game_over_label = $GameOver
 
+
+
 var mid_point_x
 var mid_point_y
 var mid_point_z
@@ -44,7 +46,7 @@ func _process(delta):
 	#Move the middle mesh in between
 	middle_mesh.global_position.x = player_2.global_position.x
 	middle_mesh.global_position.z = player_2.global_position.z
-	middle_mesh.global_position.y = player_2.global_position.y + 1.2
+	middle_mesh.global_position.y = player_2.global_position.y + 1.5
 	
 	
 	
@@ -64,7 +66,7 @@ func _process(delta):
 	player_distance = abs(player_1.global_position - player_2.global_position)
 	
 	#Stretch the middle mesh based on distance
-	middle_mesh.scale.z = player_1.global_position.distance_to(player_2.global_position) * 0.6
+	mesh.mesh.height = 0.5 + player_1.global_position.distance_to(player_2.global_position)
 	
 	#Check player distance from each other
 	#Adjust player speed

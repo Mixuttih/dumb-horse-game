@@ -137,22 +137,22 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
 
 [node name="player1" parent="." instance=ExtResource("1_v68n3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0927341, 0, 0.966794)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0927341, 0.538116, 0.966794)
 
 [node name="player2" parent="." instance=ExtResource("3_f5onw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.65269)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.19953)
 
 [node name="middle_mesh" parent="." instance=ExtResource("8_mnx48")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 1.37863, -1.99813)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0.000845799, 0.780378, 0.625308, 0.00437162, -0.625305, 0.780368, -0.0770462, 4.86855, 5.73288)
+transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0.000845799, 0.780378, 0.625308, 0.00437162, -0.625305, 0.780368, -0.0776926, 5.24019, 5.58748)
 
 [node name="PhantomCameraHost" type="Node" parent="Camera3D"]
 script = ExtResource("2_ca32w")
 
 [node name="PhantomCamera3D" type="Node3D" parent="."]
-transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0.000845799, 0.780378, 0.625308, 0.00437162, -0.625305, 0.780368, -0.0770462, 4.86855, 5.73288)
+transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0.000845799, 0.780378, 0.625308, 0.00437162, -0.625305, 0.780368, -0.0776926, 5.24019, 5.58748)
 script = ExtResource("4_ylrc6")
 priority_override = false
 priority = 0
