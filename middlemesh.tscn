@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhq48s018me83"]
+
+[ext_resource type="Texture2D" uid="uid://v866cjtfa7l8" path="res://horsearse2_horsearse.png" id="1_hvlix"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_67fq0"]
+shading_mode = 0
+albedo_texture = ExtResource("1_hvlix")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_r1wmk"]
+material = SubResource("StandardMaterial3D_67fq0")
+radius = 0.6
+
+[node name="middle_mesh" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0, 0.196844, -0.800652)
+mesh = SubResource("CapsuleMesh_r1wmk")

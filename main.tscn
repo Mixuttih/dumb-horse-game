@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://xdwhfq5y2n8g"]
+[gd_scene load_steps=24 format=3 uid="uid://xdwhfq5y2n8g"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_cjg7d"]
 [ext_resource type="PackedScene" uid="uid://dey1ic1w02olt" path="res://player_1.tscn" id="1_v68n3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b6h585c6ocpbj" path="res://player_2.tscn" id="3_f5onw"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3D.gd" id="4_ylrc6"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3D_resource.gd" id="5_m3kef"]
+[ext_resource type="PackedScene" uid="uid://bhq48s018me83" path="res://middlemesh.tscn" id="8_mnx48"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yj3uf"]
 size = Vector3(50, 1, 50)
@@ -37,11 +38,49 @@ size = Vector3(10, 1, 10)
 [sub_resource type="BoxMesh" id="BoxMesh_w53gu"]
 size = Vector3(10, 1, 10)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_ecr8a"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_jndsn"]
+size = Vector3(5, 1, 5)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_epmja"]
-height = 4.0
-radius = 2.0
+[sub_resource type="BoxMesh" id="BoxMesh_21se1"]
+size = Vector3(5, 1, 5)
+
+[sub_resource type="Animation" id="Animation_hxcjx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-9.55516, 0, -10.16)]
+}
+
+[sub_resource type="Animation" id="Animation_d8cjf"]
+resource_name = "moving"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-9.555, 2, -10.16), Vector3(-18.774, 2, -10.16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0vte5"]
+_data = {
+"RESET": SubResource("Animation_hxcjx"),
+"moving": SubResource("Animation_d8cjf")
+}
 
 [sub_resource type="Resource" id="Resource_dlphn"]
 script = ExtResource("5_m3kef")
@@ -80,31 +119,40 @@ shape = SubResource("BoxShape3D_qs0bb")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="platform"]
 mesh = SubResource("BoxMesh_w53gu")
 
-[node name="middle_mesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_ecr8a")
+[node name="moving_platform" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.55516, 0, -10.16)
 
-[node name="Area3D" type="Area3D" parent="middle_mesh"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="moving_platform"]
+shape = SubResource("BoxShape3D_jndsn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="middle_mesh/Area3D"]
-shape = SubResource("CylinderShape3D_epmja")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="moving_platform"]
+mesh = SubResource("BoxMesh_21se1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="moving_platform"]
+libraries = {
+"": SubResource("AnimationLibrary_0vte5")
+}
 
 [node name="environment" parent="." instance=ExtResource("2_1cg03")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
 
 [node name="player1" parent="." instance=ExtResource("1_v68n3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0927341, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0927341, 0, 0.966794)
 
 [node name="player2" parent="." instance=ExtResource("3_f5onw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.65269)
+
+[node name="middle_mesh" parent="." instance=ExtResource("8_mnx48")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 1.37863, -1.99813)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0.000845799, 0.780378, 0.625308, 0.00437162, -0.625305, 0.780368, -0.0763139, 4.75234, 5.9308)
+transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0.000845799, 0.780378, 0.625308, 0.00437162, -0.625305, 0.780368, -0.0770462, 4.86855, 5.73288)
 
 [node name="PhantomCameraHost" type="Node" parent="Camera3D"]
 script = ExtResource("2_ca32w")
 
 [node name="PhantomCamera3D" type="Node3D" parent="."]
-transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0.000845799, 0.780378, 0.625308, 0.00437162, -0.625305, 0.780368, -0.0763139, 4.75234, 5.9308)
+transform = Transform3D(0.99999, 0.00207357, -0.00394037, 0.000845799, 0.780378, 0.625308, 0.00437162, -0.625305, 0.780368, -0.0770462, 4.86855, 5.73288)
 script = ExtResource("4_ylrc6")
 priority_override = false
 priority = 0
@@ -123,7 +171,7 @@ inactive_update_mode = 0
 camera_3D_resource = SubResource("Resource_dlphn")
 
 [node name="BreakTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 4.0
 
 [node name="GameOver" type="Label" parent="."]
 visible = false
@@ -149,5 +197,4 @@ offset_right = 630.0
 offset_bottom = 125.0
 theme_override_font_sizes/font_size = 40
 
-[connection signal="body_entered" from="middle_mesh/Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="BreakTimer" to="." method="_on_break_timer_timeout"]

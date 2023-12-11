@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+@onready var horsearse_2 = $horsearse2
 
 var SPEED = Globals.speed_player_2
 var JUMP_VELOCITY = 4.5
@@ -25,6 +26,7 @@ func _physics_process(delta):
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
+		horsearse_2.rotation.y = lerp_angle(horsearse_2.rotation.y, atan2(input_dir.x, input_dir.y), .25)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED / 20)
 		velocity.z = move_toward(velocity.z, 0, SPEED / 20)
