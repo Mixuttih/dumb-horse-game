@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6h585c6ocpbj"]
+[gd_scene load_steps=13 format=3 uid="uid://b6h585c6ocpbj"]
 
 [ext_resource type="Script" path="res://player_2.gd" id="1_hli0t"]
 [ext_resource type="Texture2D" uid="uid://v866cjtfa7l8" path="res://horsearse2_horsearse.png" id="2_3f3t7"]
+[ext_resource type="Script" path="res://IK_start.gd" id="3_i16c0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nvg1e"]
 
@@ -81,6 +82,41 @@ bind/10/pose = Transform3D(1, 1.3282e-09, 1.01304e-10, 1.82493e-07, -0.0760504, 
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eexko"]
 albedo_texture = ExtResource("2_3f3t7")
+subsurf_scatter_strength = 1.0
+
+[sub_resource type="Animation" id="Animation_7jhek"]
+resource_name = "walk"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Armature/Skeleton3D/SkeletonIK3D:interpolation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Armature/Skeleton3D/SkeletonIK3D2:interpolation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pnlhq"]
+_data = {
+"walk": SubResource("Animation_7jhek")
+}
 
 [node name="player2" type="CharacterBody3D"]
 script = ExtResource("1_hli0t")
@@ -92,6 +128,12 @@ shape = SubResource("CapsuleShape3D_nvg1e")
 [node name="horsearse2" type="Node3D" parent="."]
 transform = Transform3D(0.4, 0, 0, 0, 0.3, 0, 0, 0, 0.4, 0, 1, 0)
 
+[node name="leftTarget" type="Marker3D" parent="horsearse2"]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0.894, -1.433, 3.316)
+
+[node name="rightTarget" type="Marker3D" parent="horsearse2"]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, -0.675, -1.434, 3.317)
+
 [node name="SoftBody3D" type="SoftBody3D" parent="horsearse2"]
 transform = Transform3D(2.5, 0, 0, 0, 3.15919, 1.06331, 0, -0.797481, 2.36939, 0, 1.39218, -2.73143)
 mesh = SubResource("PlaneMesh_gm8px")
@@ -99,25 +141,25 @@ skeleton = NodePath("../..")
 pinned_points = [0, 1, 2, 3, 4, 5, 6]
 attachments/0/point_index = 0
 attachments/0/spatial_attachment_path = NodePath("../BoneAttachment3D")
-attachments/0/offset = Vector3(0.25, 2.0063, -0.779656)
+attachments/0/offset = Vector3(0.25, 2.0063, -0.779657)
 attachments/1/point_index = 1
 attachments/1/spatial_attachment_path = NodePath("../BoneAttachment3D")
-attachments/1/offset = Vector3(0.166667, 2.0063, -0.779656)
+attachments/1/offset = Vector3(0.166667, 2.0063, -0.779657)
 attachments/2/point_index = 2
 attachments/2/spatial_attachment_path = NodePath("../BoneAttachment3D")
-attachments/2/offset = Vector3(0.0833332, 2.0063, -0.779656)
+attachments/2/offset = Vector3(0.0833332, 2.0063, -0.779657)
 attachments/3/point_index = 3
 attachments/3/spatial_attachment_path = NodePath("../BoneAttachment3D")
-attachments/3/offset = Vector3(-1.1462e-07, 2.0063, -0.779656)
+attachments/3/offset = Vector3(-1.14621e-07, 2.0063, -0.779657)
 attachments/4/point_index = 4
 attachments/4/spatial_attachment_path = NodePath("../BoneAttachment3D")
-attachments/4/offset = Vector3(-0.0833334, 2.0063, -0.779656)
+attachments/4/offset = Vector3(-0.0833334, 2.0063, -0.779657)
 attachments/5/point_index = 5
 attachments/5/spatial_attachment_path = NodePath("../BoneAttachment3D")
-attachments/5/offset = Vector3(-0.166667, 2.0063, -0.779656)
+attachments/5/offset = Vector3(-0.166667, 2.0063, -0.779657)
 attachments/6/point_index = 6
 attachments/6/spatial_attachment_path = NodePath("../BoneAttachment3D")
-attachments/6/offset = Vector3(-0.25, 2.0063, -0.779656)
+attachments/6/offset = Vector3(-0.25, 2.0063, -0.779657)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="horsearse2"]
 transform = Transform3D(1, 2.13163e-14, -1.50996e-07, -3.62028e-08, 0.970832, -0.23976, 1.46592e-07, 0.23976, 0.970832, 0, 0.0549483, -0.678503)
@@ -215,3 +257,25 @@ bones/10/scale = Vector3(1, 1, 1)
 mesh = SubResource("ArrayMesh_04ism")
 skin = SubResource("Skin_s7h7q")
 surface_material_override/0 = SubResource("StandardMaterial3D_eexko")
+
+[node name="SkeletonIK3D" type="SkeletonIK3D" parent="horsearse2/Armature/Skeleton3D"]
+process_priority = 1
+root_bone = &"Bone.02"
+tip_bone = &"Bone.03"
+interpolation = 0.0
+target_node = NodePath("../../../rightTarget")
+script = ExtResource("3_i16c0")
+
+[node name="SkeletonIK3D2" type="SkeletonIK3D" parent="horsearse2/Armature/Skeleton3D"]
+process_priority = 1
+root_bone = &"Bone.08"
+tip_bone = &"Bone.09"
+interpolation = 0.0
+target_node = NodePath("../../../leftTarget")
+script = ExtResource("3_i16c0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="horsearse2"]
+libraries = {
+"": SubResource("AnimationLibrary_pnlhq")
+}
+speed_scale = 2.0

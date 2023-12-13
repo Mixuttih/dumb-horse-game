@@ -1,4 +1,5 @@
 extends CharacterBody3D
+@onready var animation_player = $horsearse2/AnimationPlayer
 
 @onready var horsearse_2 = $horsearse2
 
@@ -24,11 +25,13 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left_2", "right_2", "forward_2", "backward_2")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
+		animation_player.play("walk")
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 		horsearse_2.rotation.y = lerp_angle(horsearse_2.rotation.y, atan2(input_dir.x, input_dir.y), .25)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED / 20)
 		velocity.z = move_toward(velocity.z, 0, SPEED / 20)
+		animation_player.stop()
 
 	move_and_slide()

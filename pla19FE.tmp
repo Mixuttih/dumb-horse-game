@@ -149,11 +149,8 @@ shape = SubResource("CapsuleShape3D_6twik")
 [node name="horseface2" type="Node3D" parent="."]
 transform = Transform3D(0.4, 0, 0, 0, 0.3, 0, 0, 0, 0.4, -0.043803, 1.00917, -0.112856)
 
-[node name="leftTarget" type="Marker3D" parent="horseface2"]
-transform = Transform3D(1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, 0.893741, -1.43284, 3.31623)
-
-[node name="rightTarget" type="Marker3D" parent="horseface2"]
-transform = Transform3D(1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, -0.675493, -1.4339, 3.31714)
+[node name="Empty" type="Node3D" parent="horseface2"]
+transform = Transform3D(0, 1, 0, 0, 0, -1, -1, 0, 0, 0, 0.695676, -1.03695)
 
 [node name="Armature" type="Node3D" parent="horseface2"]
 
@@ -316,16 +313,24 @@ process_priority = 1
 root_bone = &"Bone.02"
 tip_bone = &"Bone.03"
 interpolation = 0.0
-target_node = NodePath("../../../leftTarget")
+use_magnet = true
+target_node = NodePath("leftTarget")
 script = ExtResource("3_vkdwh")
+
+[node name="leftTarget" type="Node3D" parent="horseface2/Armature/Skeleton3D/SkeletonIK3D"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0.313693, 0.579319, 1.21364)
 
 [node name="SkeletonIK3D2" type="SkeletonIK3D" parent="horseface2/Armature/Skeleton3D"]
 process_priority = 1
 root_bone = &"Bone.15"
 tip_bone = &"Bone.16"
 interpolation = 0.0
-target_node = NodePath("../../../rightTarget")
+use_magnet = true
+target_node = NodePath("rightTarget")
 script = ExtResource("3_vkdwh")
+
+[node name="rightTarget" type="Node3D" parent="horseface2/Armature/Skeleton3D/SkeletonIK3D2"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.314, 0.579, 1.214)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="horseface2"]
 libraries = {
