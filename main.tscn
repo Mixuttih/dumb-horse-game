@@ -170,9 +170,6 @@ tween_on_load = false
 inactive_update_mode = 0
 camera_3D_resource = SubResource("Resource_dlphn")
 
-[node name="BreakTimer" type="Timer" parent="."]
-wait_time = 4.0
-
 [node name="GameOver" type="Label" parent="."]
 visible = false
 anchors_preset = 8
@@ -188,13 +185,3 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 60
 text = "YOUR HORSE BROKE :("
-
-[node name="BreakLabel" type="Label" parent="."]
-visible = false
-offset_left = 550.0
-offset_top = 70.0
-offset_right = 630.0
-offset_bottom = 125.0
-theme_override_font_sizes/font_size = 40
-
-[connection signal="timeout" from="BreakTimer" to="." method="_on_break_timer_timeout"]
